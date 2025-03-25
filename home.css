@@ -91,4 +91,37 @@
     margin-top: 15px;
     text-align: center;
   }
-  
+  /* Search Bar */
+#input {
+  width: 280px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #2980b9;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+  color: #2c3e50;
+}
+
+#input:focus {
+  border-color: #1f618d;
+  box-shadow: 0 0 10px rgba(41, 128, 185, 0.5);
+}
+
+#btn_s {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  margin-left: 5px;
+}
+
+#btn_s:hover {
+  background-color: #219150;
+}

@@ -1,4 +1,3 @@
-
 let Products = [
     {
         id: 1,
@@ -81,6 +80,9 @@ let product=document.querySelector("#products")
 
 let total_item=document.querySelector("#h2")
 
+let input=document.querySelector("#input")
+
+let btn_s=document.querySelector("#btn_s")
 
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
 
@@ -89,9 +91,9 @@ function load(){
 }
 
 
-function renderProducts(){
+function renderProducts(productlist=Products){
      
-    Products.forEach(show=>{
+    productlist.forEach(show=>{
         let show_products=document.createElement("div")   
         show_products.innerHTML=`
         ${show.img ? `<img src="./images/${show.img}" alt="${show.name}" style="width:100%; height:150px; object-fit:cover; border-radius:10px; margin-bottom:10px;">` : ""}
@@ -170,6 +172,26 @@ function total_items(){
    
 
 }
+function search(){
+ let searchText=input.value.toLowerCase().trim()
+
+ let filter_Products=Products.filter(item=>item.name.toLowerCase().includes(searchText))
+
+
+if(filter_Products.length>0)
+{
+     product.innerHTML=""
+    renderProducts(filter_Products)
+}
+else{
+    alert("Item does not found")
+}
+
+
+
+}
+btn_s.addEventListener("click",search)
+
 
 renderProducts();
 total_items();
