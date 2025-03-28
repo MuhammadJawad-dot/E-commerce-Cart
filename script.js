@@ -84,15 +84,20 @@ let input=document.querySelector("#input")
 
 let btn_s=document.querySelector("#btn_s")
 
-let cart=JSON.parse(localStorage.getItem('cart'))||[];
 
+let cart=JSON.parse(localStorage.getItem('cart'))||[];
+let draft=JSON.parse(localStorage.getItem('draft'))||[];
+
+function load_draft(){
+      localStorage.setItem('draft',JSON.stringify(draft))
+}
 function load(){
     localStorage.setItem('cart',JSON.stringify(cart))
 }
 
 
 function renderProducts(productlist=Products){
-     
+       
     productlist.forEach(show=>{
         let show_products=document.createElement("div")   
         show_products.innerHTML=`
@@ -102,10 +107,26 @@ function renderProducts(productlist=Products){
        
         `;
         product.appendChild(show_products)
-
+        let input=document.createElement("input")  
+        input.type="checkbox" 
+        input.id=`checkbox-${show.id}`     
         let btn=document.createElement("button")
         btn.textContent="Add to Cart"
-        show_products.appendChild(btn);
+        show_products.appendChild(input);
+        show_products.appendChild(btn)
+        input.checked=JSON.parse(localStorage.getItem(`checked-${show.id}`))||false
+        input.addEventListener("change",()=>{
+            localStorage.setItem(`checked-${show.id}`,JSON.stringify(input.checked))
+            
+            // load_draft();
+            // alert(`${show.name} added to Draft`)
+                favourite(show.id)
+                
+                
+              
+                
+                
+        })
         btn.addEventListener("click",()=>{
            addtocart(show.id);
            total_items();
@@ -118,6 +139,24 @@ function renderProducts(productlist=Products){
         });
      
     });
+}
+
+function favourite(id){
+    let checkbox=document.querySelector(`#checkbox-${id}`)
+ let draft_checked=Products.find(p=>p.id===id)
+
+ if(checkbox.checked){
+    draft.push(draft_checked)
+    
+    // console.log(draft)
+    
+ }
+ else{
+    draft=draft.filter(p=>p.id!==id)
+   
+    // console.log(draft)
+ }
+ load_draft();
 }
 
 
@@ -195,6 +234,7 @@ btn_s.addEventListener("click",search)
 
 renderProducts();
 total_items();
+
 
 
 
